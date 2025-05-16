@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Weather Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>About Weather Dashboard</h1>
+  </header>
+  
+  <nav>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </div>
+    <div>
+      <button id="theme-toggle" class="theme-toggle">🌙</button>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <div class="about-content">
+      <h2>Project Overview</h2>
+      <p>
+        The Weather Dashboard is a web application developed as part of the INST 377 course at the University of Maryland. 
+        It allows users to search for weather information by city name, displaying current weather conditions including 
+        temperature, weather description, humidity, and wind speed.
+      </p>
+      
+      <h2>Features</h2>
+      <ul class="feature-list">
+        <li>Search for weather by city name</li>
+        <li>Toggle between Celsius and Fahrenheit</li>
+        <li>Switch between light and dark themes</li>
+        <li>View search history</li>
+        <li>Weather data visualization with Chart.js</li>
+        <li>Persistent user preferences</li>
+        <li>Responsive design</li>
+      </ul>
+      
+      <h2>Technology Stack</h2>
+      <p>
+        This application is built using the following technologies:
+      </p>
+      <ul class="feature-list">
+        <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
+        <li><strong>JavaScript Libraries:</strong>
+          <ul>
+            <li>Font Awesome - For weather and UI icons</li>
+            <li>Chart.js - For weather data visualization</li>
+          </ul>
+        </li>
+        <li><strong>Backend:</strong> Node.js, Express.js</li>
+        <li><strong>Database:</strong> Supabase</li>
+        <li><strong>Deployment:</strong> Vercel</li>
+      </ul>
+      
+      <h2>How It Works</h2>
+      <p>
+        The Weather Dashboard uses a combination of frontend and backend technologies to provide a seamless user experience:
+      </p>
+      <ol>
+        <li>Users enter a city name in the search box</li>
+        <li>The application fetches weather data for that city</li>
+        <li>The data is displayed in an easy-to-read format</li>
+        <li>The search is saved to the history for easy access later</li>
+        <li>Weather trends are visualized using Chart.js</li>
+        <li>User preferences (theme, temperature units) are saved to the database</li>
+      </ol>
+      
+      <h2>API Endpoints</h2>
+      <p>
+        The application uses the following API endpoints:
+      </p>
+      <ul class="feature-list">
+        <li><code>GET /api/weather-history</code> - Retrieves the 10 most recent weather searches</li>
+        <li><code>POST /api/weather-history</code> - Saves a new weather search to the history</li>
+        <li><code>GET /api/user-preferences/:userId</code> - Retrieves user preferences</li>
+        <li><code>PUT /api/user-preferences/:userId</code> - Updates user preferences</li>
+      </ul>
+      
+      <h2>Future Enhancements</h2>
+      <p>
+        We plan to add the following features in future updates:
+      </p>
+      <ul class="feature-list">
+        <li>Integration with a real weather API</li>
+        <li>User authentication</li>
+        <li>Weather forecasts for upcoming days</li>
+        <li>Location-based weather detection</li>
+        <li>Weather alerts and notifications</li>
+      </ul>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 Weather Dashboard | INST 377 Project</p>
+  </footer>
+  
+  <script>
+    // Simple theme toggle for the about page
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggle = document.getElementById('theme-toggle');
+      
+      // Check if dark theme is stored in localStorage
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggle.textContent = '☀️';
+      }
+      
+      themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('dark-theme')) {
+          document.body.classList.remove('dark-theme');
+          themeToggle.textContent = '🌙';
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.body.classList.add('dark-theme');
+          themeToggle.textContent = '☀️';
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
