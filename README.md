@@ -21,10 +21,11 @@ The responsive design ensures a good user experience on both desktop and mobile 
 
 ## Features
 
-- Search for weather by city name
+- Search for weather by city name using the GoWeather API
 - Toggle between Celsius and Fahrenheit
 - Switch between light and dark themes
 - View search history
+- Weather data visualization with Chart.js
 - Persistent user preferences
 - Responsive design
 
@@ -34,6 +35,8 @@ The responsive design ensures a good user experience on both desktop and mobile 
 - **JavaScript Libraries**: 
   - Font Awesome (for icons)
   - Chart.js (for weather data visualization)
+- **APIs**:
+  - GoWeather API (for real-time weather data)
 - **Backend**: Node.js, Express.js
 - **Database**: Supabase
 - **Deployment**: Vercel
@@ -239,15 +242,15 @@ Two JavaScript libraries are used:
 
 ### Known Issues
 
-- The weather data is currently mocked and not fetched from a real weather API
+- The application has a fallback to mock data if the GoWeather API fails
 - User authentication is not implemented, using a random ID for demo purposes
 
 ### Future Development Roadmap
 
 1. **Short-term (1-3 months)**
-   - Integrate with a real weather API (OpenWeatherMap or similar)
    - Add user authentication
-   - Implement weather forecasts for upcoming days
+   - Implement more detailed weather forecasts for upcoming days
+   - Add error handling and retry mechanisms for API calls
 
 2. **Medium-term (3-6 months)**
    - Add location-based weather detection

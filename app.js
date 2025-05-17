@@ -221,9 +221,8 @@ searchForm.addEventListener('submit', (e) => {
 // Search for weather data
 async function searchWeather(city) {
   try {
-    // In a real app, this would call an actual weather API
-    // For demo purposes, we'll use mock data
-    const weatherData = await getMockWeatherData(city);
+    // Call the GoWeather API to get real weather data
+    const weatherData = await getWeatherData(city);
     displayWeatherData(weatherData);
     saveWeatherSearch(weatherData);
   } catch (error) {
@@ -236,11 +235,50 @@ async function searchWeather(city) {
   }
 }
 
-// Get mock weather data (in a real app, this would call an actual API)
-async function getMockWeatherData(city) {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
+// Get real weather data from GoWeather API
+async function getWeatherData(city) {
+  try {
+    // Format city name for URL (replace spaces with %20)
+    const formattedCity = encodeURIComponent(city);
+    
+    // Call the GoWeather API
+    const response = await fetch(`https://goweather.herokuapp.com/weather/${formattedCity}`);
+    
+    if (!response.ok) {
+      throw new Error('Weather API request failed');
+    }
+    
+    const data = await response.json();
+    
+    // Extract temperature value (remove " °C" from the string)
+    let tempValue = data.temperature ? parseFloat(data.temperature.replace(/[^-\d.]/g, '')) : 20;
+    
+    // Extract wind speed value (remove " km/h" from the string)
+    let windSpeedValue = data.wind ? parseFloat(data.wind.replace(/[^-\d.]/g, '')) : 5;
+    
+    // Default humidity (GoWeather API doesn't provide humidity)
+    const humidity = 60;
+    
+    return {
+      city: city,
+      temperature: tempValue,
+      description: data.description || 'Unknown',
+      humidity: humidity,
+      windSpeed: windSpeedValue,
+      forecast: data.forecast || [],
+      timestamp: new Date().toISOString()
+    };
+  } catch (error) {
+    console.error('Error fetching from GoWeather API:', error);
+    
+    // Fallback to mock data if API fails
+    console.log('Falling back to mock data');
+    return getFallbackWeatherData(city);
+  }
+}
+
+// Fallback to mock data if the API fails
+function getFallbackWeatherData(city) {
   // Generate random weather data based on the city name
   const cityHash = city.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const temp = 15 + (cityHash % 20); // Temperature between 15-35°C
