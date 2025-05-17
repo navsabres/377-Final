@@ -1,27 +1,29 @@
--- Create weather_searches table
+-- Create the weather_searches table
 CREATE TABLE IF NOT EXISTS weather_searches (
-  id SERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   city TEXT NOT NULL,
-  temperature TEXT NOT NULL,
-  description TEXT NOT NULL,
-  timestamp TIMESTAMPTZ DEFAULT NOW()
+  temperature TEXT,
+  description TEXT,
+  timestamp TIMESTAMPTZ DEFAULT now()
 );
 
--- Create user_preferences table
+-- Create the user_preferences table
 CREATE TABLE IF NOT EXISTS user_preferences (
-  id TEXT PRIMARY KEY,
-  theme TEXT DEFAULT 'light',
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id TEXT NOT NULL,
   units TEXT DEFAULT 'celsius',
-  default_city TEXT DEFAULT 'College Park'
+  default_city TEXT DEFAULT 'New York',
+  theme TEXT DEFAULT 'light'
 );
 
 -- Create indexes for better performance
-CREATE INDEX IF NOT EXISTS weather_searches_timestamp_idx ON weather_searches (timestamp DESC);
-CREATE INDEX IF NOT EXISTS weather_searches_city_idx ON weather_searches (city);
+CREATE INDEX IF NOT EXISTS weather_searches_city_idx ON weather_searches(city);
+CREATE INDEX IF NOT EXISTS weather_searches_timestamp_idx ON weather_searches(timestamp);
+CREATE INDEX IF NOT EXISTS user_preferences_user_id_idx ON user_preferences(user_id);
 
 -- Add sample data for testing
 INSERT INTO weather_searches (city, temperature, description)
-VALUES 
+VALUES
   ('New York', '22.5', 'Sunny'),
   ('London', '15.2', 'Rainy'),
   ('Tokyo', '28.7', 'Partly Cloudy'),
@@ -29,6 +31,6 @@ VALUES
   ('Paris', '18.9', 'Cloudy');
 
 -- Add a sample user preference
-INSERT INTO user_preferences (id, theme, units, default_city)
-VALUES ('default_user', 'light', 'celsius', 'College Park')
-ON CONFLICT (id) DO NOTHING;
+INSERT INTO user_preferences (user_id, theme, units, default_city)
+VALUES ('default_user', 'light', 'celsius', 'New York')
+ON CONFLICT DO NOTHING;
