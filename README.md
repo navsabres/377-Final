@@ -43,7 +43,7 @@ The responsive design ensures a good user experience on both desktop and mobile 
 
 ## Live Demo
 
-[View the live demo on Vercel](https://weather-dashboard-inst377.vercel.app)
+[View the live demo on Vercel](https://377-final-1ult-git-main-naveed-siddiquis-projects.vercel.app)
 
 ---
 
